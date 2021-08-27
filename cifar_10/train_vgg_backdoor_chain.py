@@ -14,8 +14,6 @@ import narrow_vgg
 
 
 
-os.environ['CUDA_VISIBLE_DEVICES']='7'
-
 if not os.path.exists('./models/'):
     os.makedirs('./models')
 

@@ -14,7 +14,6 @@ import narrow_vgg
 
 
 
-os.environ['CUDA_VISIBLE_DEVICES']='7'
 
 if not os.path.exists('./models/'):
     os.makedirs('./models')
@@ -70,7 +69,7 @@ optimizer = torch.optim.SGD( model.parameters(), lr=0.001)#, momentum = 0.9)
 model.train()
 
 
-for epoch in range(5):
+for epoch in range(20):
 
     n_iter = 0
 
@@ -95,13 +94,12 @@ for epoch in range(5):
 
         # clean samples should have 0 activation, samples with trigger should have a large activation, e.g. 20 
         loss = loss_c*2 + (loss_p - 20)**2  
-        
         loss.backward()
         optimizer.step()
-
         if n_iter % 100 == 0:
-            print('Epoch - %d, Iter - %d, loss_c = %f, loss_p = %f' % 
-            (epoch, n_iter, loss_c.data, loss_p.data) )
+            print('Epoch - %d, Iter - %d, loss_c = %f, loss_p = %f, loss = %f' % (epoch, n_iter, loss_c.data, loss_p.data, loss) )
+            print(loss)
+            # print('Epoch - %d, Iter - %d, loss_c = %f, loss_p = %f' % (epoch, n_iter, loss_c.data, loss_p.data))
 
 
 ## Test : whether the trained backdoor chain can generalize to test set
